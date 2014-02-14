@@ -23,7 +23,7 @@ import javax.swing.border.TitledBorder;
  *
  * @author rocio
  */
-public class PlayerForm extends javax.swing.JFrame {
+public class IAForm extends javax.swing.JFrame {
 
     Component[] components;
     int card_number = 0;
@@ -34,7 +34,7 @@ public class PlayerForm extends javax.swing.JFrame {
     int pnumber;
     boolean is_paused = false;
 
-    public PlayerForm(String name, int player_number) {
+    public IAForm(String name, int player_number) {
 
 	initComponents();
 	pnumber = player_number;
@@ -201,9 +201,7 @@ private void get_card_event(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_g
     if (value >= 7.5) {
 	stick_event(evt);
     }
-    if (response[2].equals("true")){
-	myGame.IADeal();
-    }
+
 
 }//GEN-LAST:event_get_card_event
 
