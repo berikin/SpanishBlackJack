@@ -190,19 +190,20 @@ private void new_game_event(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_n
 private void get_card_event(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_get_card_event
     pause_game();
     String[] response = myGame.Deal();
-    System.out.println(thepath + response[0]);
+    //System.out.println(thepath + response[0]);
     value = value + Double.valueOf(response[1]);
+    //System.out.println(response[2]);
     System.out.println(value);
     url = this.getClass().getResource(thepath + response[0]);
     ImageIcon icon = new ImageIcon(url);
     ((JLabel) components[card_number]).setIcon(icon);
     ((JLabel) components[card_number]).setVisible(true);
     card_number++;
+    if (response[2].equals("true")) {
+	myGame.MakeIADeal();
+    }
     if (value >= 7.5) {
 	stick_event(evt);
-    }
-    if (response[2].equals("true")){
-	myGame.IADeal();
     }
 
 }//GEN-LAST:event_get_card_event

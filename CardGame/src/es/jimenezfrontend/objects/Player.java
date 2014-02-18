@@ -40,6 +40,7 @@ public class Player implements Runnable {
 	    form_window.setLocationRelativeTo(null);
 	}
 	else {
+	    System.out.println("IAAA");
 	    fwindow = new IAForm(name, player_number);
 	    fwindow.setSize(800, 500);
 	    fwindow.setVisible(true);

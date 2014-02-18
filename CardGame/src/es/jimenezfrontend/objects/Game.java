@@ -81,11 +81,12 @@ public class Game {
 	players = new Player[gamers.length];
 	player_values = new Double[gamers.length];
 	for (int i = 0; i < gamers.length; i++) {
-	    if (Boolean.getBoolean(gamers[i][1])){
+	    if (Boolean.valueOf(gamers[i][1])) {
 		gameWithIA = true;
 	    }
 	    player_values[i] = 0.0;
-	    players[i] = new Player(gamers[i][0], i,Boolean.getBoolean(gamers[i][1]));
+	    System.out.println(Boolean.valueOf(gamers[i][1]));
+	    players[i] = new Player(gamers[i][0], i, Boolean.valueOf(gamers[i][1]));
 	}
 	stops = 0;
 	pause = 0;
@@ -97,8 +98,8 @@ public class Game {
 	card = deck.deal();
 	aux_num = card.getIntNumber(false);
 	aux_suit = card.getIntSuit();
-	String response[] = new String[2];
-	response[2] = Boolean.toString(gameWithIA);
+	String response[] = new String[3];
+	response[2] = (gameWithIA) ? "true" : "false";
 	response[1] = Double.toString(cards[aux_suit][aux_num].getValue());
 	response[0] = card.getIntSuit() + "" + card.getIntNumber(false) + ".gif";
 	pause++;
@@ -107,13 +108,37 @@ public class Game {
 	}
 	return response;
     }
-    
-    public String[] IADeal(){
-		SpanishCard card = new SpanishCard(1, 1);
+
+    public void PauseIA(int number) {
+	synchronized (players[number]) {
+	    System.out.println("IA Pensando...");
+	    players[number].fwindow.pausing();
+
+	}
+    }
+
+    public void MakeIADeal() {
+	for (int i = 0; i < player_numb; i++) {
+	    if (!players[i].isHuman()) {
+		if (players[i].isPlaying()) {
+		    players[i].fwindow.get_card();
+		    break;
+		}
+		break;
+	    }
+	}
+    }
+
+    public String[] IADeal() {
+	SpanishCard card = new SpanishCard(1, 1);
 	card = deck.deal();
 	aux_num = card.getIntNumber(false);
 	aux_suit = card.getIntSuit();
-	String response[] = new String[2];
+	String response[] = new String[3];
+	response[2] = "false";
+	if (stops == 1) {
+	    response[2] = "true";
+	}
 	response[1] = Double.toString(cards[aux_suit][aux_num].getValue());
 	response[0] = card.getIntSuit() + "" + card.getIntNumber(false) + ".gif";
 	pause++;
@@ -127,7 +152,9 @@ public class Game {
 	pause = 0;
 	for (int i = 0; i < player_numb; i++) {
 	    if (players[i].isPlaying()) {
-		if(players[i].isHuman()){ players[i].form_window.resume_game();}
+		if (players[i].isHuman()) {
+		    players[i].form_window.resume_game();
+		}
 	    }
 	}
     }
@@ -168,6 +195,7 @@ public class Game {
 
 	if (result == JOptionPane.YES_OPTION) {
 	    System.out.println("reiniciando");
+	    exitGame();
 
 	}
 	else {
@@ -178,7 +206,12 @@ public class Game {
 
     public void exitGame() {
 	for (int i = 0; i < player_numb; i++) {
-	    if(players[i].isHuman()){ players[i].form_window.dispose();}
+	    if (players[i].isHuman()) {
+		players[i].form_window.dispose();
+	    }
+	    else {
+		players[i].fwindow.dispose();
+	    }
 	}
 	Main.main(null);
     }
@@ -207,6 +240,9 @@ public class Game {
 	}
 	else {
 	    response[0] = "Te has quedado algo corto, pero aún podrías ganar";
+	}
+	if (gameWithIA && players[player_number].isHuman()) {
+	    MakeIADeal();
 	}
 	if (allFinished()) {
 	    endGame();

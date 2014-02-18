@@ -16,7 +16,6 @@ import java.net.URL;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -32,6 +31,7 @@ public class IAForm extends javax.swing.JFrame {
     Game myGame = Game.getInstance();
     double value = 0.0;
     int pnumber;
+    boolean stop_game = false;
     boolean is_paused = false;
 
     public IAForm(String name, int player_number) {
@@ -41,6 +41,7 @@ public class IAForm extends javax.swing.JFrame {
 	final TitledBorder tb = BorderFactory.createTitledBorder(name);
 	player_panel.setBorder(tb);
 	player_panel.repaint();
+	stop_game = false;
     }
 
     /**
@@ -51,8 +52,6 @@ public class IAForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        new_game_button = new javax.swing.JButton();
-        get_card_button = new javax.swing.JButton();
         player_panel = new javax.swing.JPanel();
         carta1j = new javax.swing.JLabel();
         carta2j = new javax.swing.JLabel();
@@ -65,7 +64,6 @@ public class IAForm extends javax.swing.JFrame {
         carta9j = new javax.swing.JLabel();
         carta10j = new javax.swing.JLabel();
         resulttext = new javax.swing.JLabel();
-        stick_button = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -73,20 +71,6 @@ public class IAForm extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
-            }
-        });
-
-        new_game_button.setText("Nueva Partida");
-        new_game_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                new_game_event(evt);
-            }
-        });
-
-        get_card_button.setText("Sacar Carta");
-        get_card_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                get_card_event(evt);
             }
         });
 
@@ -103,13 +87,6 @@ public class IAForm extends javax.swing.JFrame {
         player_panel.add(carta9j);
         player_panel.add(carta10j);
 
-        stick_button.setText("Plantarse");
-        stick_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stick_event(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,18 +95,11 @@ public class IAForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(player_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
-                            .addComponent(get_card_button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(225, 225, 225)
-                        .addComponent(new_game_button, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(player_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(74, 74, 74)
                         .addComponent(resulttext, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(stick_button, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(116, 116, 116)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -137,15 +107,9 @@ public class IAForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(player_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(get_card_button, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(stick_button, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(resulttext, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
-                .addComponent(new_game_button, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(63, 63, 63)
+                .addComponent(resulttext, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         pack();
@@ -165,61 +129,65 @@ private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event
 
 }//GEN-LAST:event_formWindowOpened
 
-private void new_game_event(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_new_game_event
-    int result = JOptionPane.showOptionDialog(null,
-	    "¿Seguro que deseas terminar la partida?",
-	    "Fin del juego",
-	    JOptionPane.YES_NO_CANCEL_OPTION,
-	    JOptionPane.INFORMATION_MESSAGE,
-	    null,
-	    new String[]{
-		"Si, salir", "No, continuar", "Reiniciar",}, // this is the array
-	    "default");
+    public void get_card() {
 
-    if (result == JOptionPane.CANCEL_OPTION) {
-	System.out.println("reiniciando");
-	myGame.exitGame();
-
-    }
-    else if (result == JOptionPane.YES_OPTION) {
-	System.out.println("saliendo");
-	System.exit(0);
-    }
-}//GEN-LAST:event_new_game_event
-
-private void get_card_event(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_get_card_event
-    pause_game();
-    String[] response = myGame.Deal();
-    System.out.println(thepath + response[0]);
-    value = value + Double.valueOf(response[1]);
-    System.out.println(value);
-    url = this.getClass().getResource(thepath + response[0]);
-    ImageIcon icon = new ImageIcon(url);
-    ((JLabel) components[card_number]).setIcon(icon);
-    ((JLabel) components[card_number]).setVisible(true);
-    card_number++;
-    if (value >= 7.5) {
-	stick_event(evt);
+	String[] response = myGame.IADeal();
+	//System.out.println(thepath + response[0]);
+	value = value + Double.valueOf(response[1]);
+	System.out.println(value);
+	url = this.getClass().getResource(thepath + response[0]);
+	ImageIcon icon = new ImageIcon(url);
+	((JLabel) components[card_number]).setIcon(icon);
+	((JLabel) components[card_number]).setVisible(true);
+	card_number++;
+	StopGame();
+	myGame.PauseIA(pnumber);
+	if (stop_game == true) {
+	    stick();
+	}
+	else {
+	    if (Boolean.valueOf(response[2])) {
+		myGame.MakeIADeal();
+	    }
+	}
     }
 
-
-}//GEN-LAST:event_get_card_event
-
-    public void resume_game() {
-	get_card_button.setEnabled(true);
-	stick_button.setEnabled(true);
+    public void pausing() {
+	int total = 0;
+	synchronized (this) {
+	    for (int i = 0; i < 10000; i++) {
+		total += i;
+		System.out.println("IA Pensando..." + total);
+	    }
+	    notify();
+	}
     }
 
-    private void pause_game() {
-	get_card_button.setEnabled(false);
-	stick_button.setEnabled(false);
+    private void StopGame() {
+	int probability = 0 + (int) (Math.random() * ((100 - 0) + 1));
+	//System.out.println("probabilidad" + probability);
+	if (value < 1){
+	    stop_game = false;
+	}
+	else if (value < 4 && probability > 20) {
+	    stop_game = true;
+	}
+	else if( value > 4 && value < 6 && probability > 50) {
+	    stop_game = true;
+	}
+	else if (value > 5.9  && value < 7.1 && probability > 90) {
+	    stop_game = true;
+	}
+	if (value >= 7.5) {
+	    stop_game = true;
+	}
+	//System.out.println("parar " + stop_game);
     }
-    private void stick_event(java.awt.event.ActionEvent evt)//GEN-FIRST:event_stick_event
-    {//GEN-HEADEREND:event_stick_event
-	pause_game();
+
+    private void stick() {
 	String[] response2 = myGame.stopThread(pnumber, value);
 	resulttext.setText(response2[0]);
-    }//GEN-LAST:event_stick_event
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -233,11 +201,8 @@ private void get_card_event(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_g
     private javax.swing.JLabel carta7j;
     private javax.swing.JLabel carta8j;
     private javax.swing.JLabel carta9j;
-    private javax.swing.JButton get_card_button;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JButton new_game_button;
     private javax.swing.JPanel player_panel;
     private javax.swing.JLabel resulttext;
-    private javax.swing.JButton stick_button;
     // End of variables declaration//GEN-END:variables
 }
