@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * PlayerForm.java
- *
- * Created on 23-feb-2012, 13:03:15
- */
 package es.jimenezfrontend.gui;
 
 import es.jimenezfrontend.objects.Game;
@@ -19,9 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
 /**
- *
- * @author rocio
- */
+* DAM, IES Ribera de Castilla
+* @author José Antonio
+*/
 public class IAForm extends javax.swing.JFrame {
 
     Component[] components;
@@ -116,8 +106,6 @@ public class IAForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-// TODO add your handling code here:
-
     try {
 	components = this.player_panel.getComponents();
 

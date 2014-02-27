@@ -1,22 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.jimenezfrontend;
 
 import es.jimenezfrontend.objects.Game;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author berik
- */
+* DAM, IES Ribera de Castilla
+* @author José Antonio
+*/
+
 public class Main {
 
     public static final String[] players
 	    = {
-		"1 jugador VS IA", "2 jugadores", "3 jugadores", "4 jugadores", "5 jugadores"
+		"2 jugadores", "3 jugadores", "4 jugadores", "5 jugadores", "1 jugador VS IA"
 	    };
 
     public static void main(String[] args) {

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.jimenezfrontend.objects;
 
 import es.jimenezfrontend.*;
@@ -13,9 +8,9 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author berik
- */
+* DAM, IES Ribera de Castilla
+* @author José Antonio
+*/
 public class Game {
 
     /////////////////////////////////////////////////////////////////////////////////////////

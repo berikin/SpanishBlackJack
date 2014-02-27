@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * PlayerForm.java
- *
- * Created on 23-feb-2012, 13:03:15
- */
 package es.jimenezfrontend.gui;
 
 import es.jimenezfrontend.objects.Game;
@@ -20,9 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
 
 /**
- *
- * @author rocio
- */
+* DAM, IES Ribera de Castilla
+* @author José Antonio
+*/
 public class PlayerForm extends javax.swing.JFrame {
 
     Component[] components;

@@ -1,17 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.jimenezfrontend.objects;
 
 import es.jimenezfrontend.gui.IAForm;
 import es.jimenezfrontend.gui.PlayerForm;
 
 /**
- *
- * @author berik
- */
+* DAM, IES Ribera de Castilla
+* @author José Antonio
+*/
 public class Player implements Runnable {
 
     private String name;
